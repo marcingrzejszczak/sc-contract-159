@@ -1,0 +1,13 @@
+allprojects {
+    repositories {
+    	mavenCentral()
+    	mavenLocal()
+    	maven { url "http://repo.spring.io/snapshot" }
+    	maven { url "http://repo.spring.io/milestone" }
+    	maven { url "http://repo.spring.io/release" }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14'
+}
