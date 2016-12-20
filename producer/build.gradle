@@ -35,20 +35,26 @@ dependencies {
 
 	testCompile("org.springframework.cloud:spring-cloud-starter-contract-verifier")
 	testCompile("org.springframework.cloud:spring-cloud-stream-test-support")
-	// tag::test_dep[]
 	testCompile(project(":beer-common"))
-	// end::test_dep[]
 }
 
 contracts {
 	packageWithBaseClasses = 'com.example'
+	basePackageForTests = 'com.example'
 }
 
 task checkMappings(dependsOn: ["generateWireMockClientStubs"]) {
-	  doLast {
-			def producer = project(":producer")
-	    assert file("${producer.buildDir}/stubs/mappings").exists()
-		}
+	doLast {
+		assert file("${project(":producer").buildDir}/stubs/mappings/beer/rest/shouldGrantABeerIfOldEnough.json").exists()
+	}
+}
+
+task checkGeneratedTests(dependsOn: ["generateContractTests"]) {
+	doLast {
+		String root = "${project(":producer").buildDir}/generated-test-sources/contracts/com/example/beer/"
+		assert file("${root}/RestTest.java").exists()
+		assert file("${root}/MessagingTest.java").exists()
+	}
 }
 
 test {
