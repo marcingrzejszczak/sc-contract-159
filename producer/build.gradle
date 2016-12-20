@@ -45,8 +45,10 @@ contracts {
 }
 
 task checkMappings(dependsOn: ["generateWireMockClientStubs"]) {
-    def producer = project(":producer")
-    assert file("${producer.buildDir}/stubs/mappings").exists()
+	  doLast {
+			def producer = project(":producer")
+	    assert file("${producer.buildDir}/stubs/mappings").exists()
+		}
 }
 
 test {
