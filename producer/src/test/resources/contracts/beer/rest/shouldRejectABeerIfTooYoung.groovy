@@ -2,8 +2,6 @@ package contracts.beer.rest
 
 import org.springframework.cloud.contract.spec.Contract
 
-import static com.example.PatternUtils.tooYoung
-
 Contract.make {
 	request {
 		description("""
@@ -19,7 +17,7 @@ we'll NOT grant him the beer
 		method 'POST'
 		url '/check'
 		body(
-				age: value(consumer(tooYoung()))
+				age: value(consumer(regex("[0-9]")))
 		)
 		headers {
 			header 'Content-Type', 'application/json'
