@@ -44,7 +44,11 @@ contracts {
 
 task checkMappings(dependsOn: ["generateWireMockClientStubs", project(":beer-common").build]) {
 	doLast {
-		assert file("${project(":producer").buildDir}/stubs/mappings/beer/rest/shouldGrantABeerIfOldEnough.json").exists()
+		if (BOM_VERSION.contains("Dalston")) {
+			assert file("${project(":producer").buildDir}/stubs/META-INF/com.example/producer/0.0.1-SNAPSHOT/mappings/beer/rest/shouldGrantABeerIfOldEnough.json").exists()
+		} else {
+			assert file("${project(":producer").buildDir}/stubs/mappings/beer/rest/shouldGrantABeerIfOldEnough.json").exists()
+		}
 	}
 }
 
